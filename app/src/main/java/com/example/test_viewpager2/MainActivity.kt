@@ -10,7 +10,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportFragmentManager.beginTransaction().add(R.id.mainContainer, AdminFragment()).commit()
+
+        startFragment(intentsArgs())
+
     }
 
+    private fun startFragment(arg:Boolean) {
+        if(arg){
+            supportFragmentManager.beginTransaction().add(R.id.mainContainer, AdminFragment()).commit()
+        }else{
+            supportFragmentManager.beginTransaction().add(R.id.mainContainer, TabFragment()).commit()
+        }
+    }
+
+    private fun intentsArgs():Boolean{
+        val bundle = intent.extras?: throw IllegalThreadStateException("info null Boolean")
+        val arg = MainActivityArgs.fromBundle(bundle)
+        return arg.arg
+    }
 }
